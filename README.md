@@ -1,16 +1,9 @@
-Here is your **complete, final README.md** with:
 
-✅ A **beautiful banner header** (pure Markdown – works on GitHub)
-✅ A **professional architecture diagram** (Mermaid)
-✅ Fully formatted, clean, and ready to paste
-👉 **Just copy → paste → save.**
-
----
 
 # 🌾 **CropAI – Intelligent Crop Disease Detection & Smart Recommendation System**
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/placeholder/CropAI-Banner.png" alt="CropAI Banner" width="800"/>
+  <img src="https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/ChatGPT%20Image%20Dec%208,%202025,%2002_39_04%20AM.png?raw=true" alt="CropAI Banner" width="800"/>
 </p>
 
 
@@ -191,31 +184,3 @@ Perfect for:
 
 ---
 
-# ⭐ Final Step: Upload Banner Image
-
-1. Go to your GitHub repo
-2. Click **Add file → Upload file**
-3. Upload your banner image (PNG/JPG) into the repository
-4. Click the image → copy its URL
-5. Replace this line:
-
-```markdown
-<img src="https://user-images.githubusercontent.com/placeholder/CropAI-Banner.png" alt="CropAI Banner" width="800"/>
-```
-
-with:
-
-```markdown
-<img src="YOUR_UPLOADED_IMAGE_URL" alt="CropAI Banner" width="800"/>
-```
-
-Done 💥
-
----
-
-If you'd like, I can also:
-
-✅ Create a professional banner image for you
-✅ Add badges (Python version, FastAPI, TensorFlow, license, stars)
-✅ Style the README even more professionally
-Just tell me!
