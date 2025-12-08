@@ -138,7 +138,8 @@ Create `/screenshots` and upload images.
 Then embed like this:
 
 ```markdown
-![Dashboard Home](./screenshots/dashboard_home.png)
+![Dashboard Home](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/screenschots/dashboard_homepage.jpg)
+
 ![Disease Prediction](./screenshots/disease_result.png)
 ![Crop Recommendation](./screenshots/crop_result.png)
 ![Fertilizer Recommendation](./screenshots/fertilizer_result.png)
