@@ -26,10 +26,23 @@ if uploaded_file is not None:
         with st.spinner("Predicting disease..."):
             try:
                 resp = requests.post(f"{API_URL}/predict-disease", files=files)
+
                 if resp.status_code == 200:
                     data = resp.json()
-                    st.success(f"Disease: {data['disease_label']}")
-                    st.write(f"Confidence: {data['confidence']:.2f}")
+                    label = data["disease_label"]
+                    conf = data["confidence"]
+
+                    # Confidence-based message
+                    if conf < 0.60:
+                        st.warning(
+                        f"⚠️ Model is not confident.\n\n"
+                        f"Predicted: **{label}**\n"
+                        f"Confidence: **{conf:.2f}**"
+                    )
+                    else:
+                        st.success(f"Disease: {label}")
+                        st.write(f"Confidence: {conf:.2f}")
+
                 else:
                     st.error(f"Error: {resp.status_code} - {resp.text}")
             except Exception as e:

@@ -12,6 +12,30 @@ import json
 from tensorflow.keras.models import load_model
 
 # -----------------------------
+# Manual mappings for Fertilizer dataset
+# (Verify with your dataset; these are standard for the Fertilizer_Prediction.csv)
+# -----------------------------
+
+SOIL_TYPE_MAP = {
+    "Sandy": 0,
+    "Loamy": 1,
+    "Black": 2,
+    "Red": 3,
+    "Clayey": 4,
+}
+
+CROP_TYPE_MAP = {
+    "Maize": 0,
+    "Sugarcane": 1,
+    "Cotton": 2,
+    "Tobacco": 3,
+    "Paddy": 4,
+    "Barley": 5,
+    "Wheat": 6,
+}
+
+
+# -----------------------------
 # Paths
 # -----------------------------
 
@@ -133,39 +157,48 @@ def preprocess_image_for_disease(file_bytes: bytes) -> np.ndarray:
 
 
 def encode_fertilizer_features(data: FertilizerInput) -> np.ndarray:
-    """Encode categorical columns and return numeric feature array."""
-    # Numerical features in this order:
+    """Encode input features for fertilizer recommendation.
+
+    Soil_Type and Crop_Type are received as human-readable strings (e.g. 'Loamy', 'Sugarcane')
+    and mapped to the numeric codes used during model training.
+    """
+    # Map soil type string to numeric code
+    try:
+        soil_code = SOIL_TYPE_MAP[data.Soil_Type]
+    except KeyError:
+        valid = list(SOIL_TYPE_MAP.keys())
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unknown Soil_Type: {data.Soil_Type}. Valid values: {valid}",
+        )
+
+    # Map crop type string to numeric code
+    try:
+        crop_code = CROP_TYPE_MAP[data.Crop_Type]
+    except KeyError:
+        valid = list(CROP_TYPE_MAP.keys())
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unknown Crop_Type: {data.Crop_Type}. Valid values: {valid}",
+        )
+
+    # Build feature vector in the same order as training:
     # Temparature, Humidity, Moisture, Soil_Type, Crop_Type, Nitrogen, Potassium, Phosphorous
-
-    # Encode categorical values using the same LabelEncoders used during training
-    soil_le = fert_cat_encoders.get("Soil_Type")
-    crop_le = fert_cat_encoders.get("Crop_Type")
-
-    if soil_le is None or crop_le is None:
-        raise ValueError("Fertilizer categorical encoders not loaded correctly.")
-
-    try:
-        soil_encoded = soil_le.transform([data.Soil_Type])[0]
-    except Exception:
-        raise HTTPException(status_code=400, detail=f"Unknown Soil_Type: {data.Soil_Type}")
-
-    try:
-        crop_encoded = crop_le.transform([data.Crop_Type])[0]
-    except Exception:
-        raise HTTPException(status_code=400, detail=f"Unknown Crop_Type: {data.Crop_Type}")
-
     features = [
         data.Temparature,
         data.Humidity,
         data.Moisture,
-        soil_encoded,
-        crop_encoded,
+        soil_code,
+        crop_code,
         data.Nitrogen,
         data.Potassium,
-        data.Phophorous if hasattr(data, "Phophorous") else data.Phosphorous,
+        data.Phosphorous,
     ]
 
     return np.array(features).reshape(1, -1)
+
+
+
 
 
 # -----------------------------
@@ -233,9 +266,17 @@ def recommend_fertilizer(data: FertilizerInput):
     if fert_model is None or fert_scaler is None or fert_label_encoder is None or fert_cat_encoders is None:
         raise HTTPException(status_code=500, detail="Fertilizer model or encoders not loaded.")
 
-    X = encode_fertilizer_features(data)
-    X_scaled = fert_scaler.transform(X)
-    pred_encoded = fert_model.predict(X_scaled)
+    try:
+        X = encode_fertilizer_features(data)
+        X_scaled = fert_scaler.transform(X)
+        pred_encoded = fert_model.predict(X_scaled)
+    except HTTPException:
+        # Re-raise HTTPExceptions as-is so client sees the message
+        raise
+    except Exception as e:
+        # Any other unexpected error
+        raise HTTPException(status_code=500, detail=f"Unexpected error in fertilizer prediction: {e}")
+
     fert_name = fert_label_encoder.inverse_transform(pred_encoded)[0]
 
     return {
