@@ -204,13 +204,19 @@ All screenshots are stored in the `/screenshots` folder on GitHub.
 
 ### **Dashboard Homepage**
 
-![Dashboard Homepage](./screenshots/dashboard_homepage.jpg)
+![Dashboard Homepage](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/screenschots/dashboard_homepage.jpg)
 
-<p align="center">
-  <img src="https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/ChatGPT%20Image%20Dec%208,%202025,%2002_39_04%20AM.png?raw=true" alt="homepage" width="800"/>
-</p>
+### **Disease Prediction**
+![Disease Prediction](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/screenschots/crop_diseas1.jpg)
+![Disease Prediction](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/screenschots/crop_diseas2.jpg)
 
-*(You can add more screenshots the same way.)*
+### **Crop Recommendation**
+![Crop Recommendation](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/screenschots/crop_reccomendation.jpg)
+
+### **Fertilizer Recommendation**
+![Fertilizer Recommendation](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/screenschots/fertilizer_recommendation.jpg)
+
+
 
 ---
 
