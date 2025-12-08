@@ -1,16 +1,93 @@
 
 
-# 🌾 **CropAI – Intelligent Crop Disease Detection & Smart Recommendation System**
+# **🌾 CropAI – AI-powered Agricultural Assistant**
 
-<p align="center">
-  <img src="https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/ChatGPT%20Image%20Dec%208,%202025,%2002_39_04%20AM.png?raw=true" alt="CropAI Banner" width="800"/>
-</p>
+*A Deep Learning + Machine Learning-based system for crop disease detection, crop recommendation, and fertilizer recommendation.*
 
-
+![CropAI Banner](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/ChatGPT%20Image%20Dec%208,%202025,%2002_39_04%20AM.png?raw=true)
 
 ---
 
-## 🏗️ **Project Architecture**
+# 🚀 **Project Overview**
+
+CropAI is a fully integrated, end-to-end AI system for farmers that can:
+
+1. **Detect crop disease** from an image
+2. **Recommend the best crop** based on soil & climate parameters
+3. **Recommend the right fertilizer** based on crop, soil type, nutrients
+
+Includes:
+
+* **ML + DL Models**
+* **FastAPI Backend**
+* **Streamlit Dashboard**
+* **Cloud Deployment**
+* *(Mobile app coming soon)*
+
+---
+
+# 🔥 **Features**
+
+## 🩻 1. Crop Disease Detection (Computer Vision)
+
+* Trained MobileNetV2 on the **PlantVillage dataset**
+* Input: leaf image
+* Output: disease label + confidence
+
+**API Endpoint:** `POST /predict-disease`
+**Example Response:**
+
+```json
+{
+  "predicted_class_index": 14,
+  "disease_label": "Tomato___Early_blight",
+  "confidence": 0.83
+}
+```
+
+---
+
+## 🌱 2. Crop Recommendation System
+
+Uses soil & climate parameters:
+
+* N, P, K
+* Temperature
+* Humidity
+* pH
+* Rainfall
+
+**API Endpoint:** `POST /recommend-crop`
+**Example Response:**
+
+```json
+{
+  "recommended_crop": "rice"
+}
+```
+
+---
+
+## 🌾 3. Fertilizer Recommendation System
+
+Based on:
+
+* Temperature, Humidity, Moisture
+* Soil Type, Crop Type
+* N, P, K
+
+**API Endpoint:** `POST /recommend-fertilizer`
+**Example Response:**
+
+```json
+{
+  "recommended_fertilizer": "Urea"
+}
+```
+
+---
+
+# 🧱 **Project Architecture**
 
 ```mermaid
 graph TD
@@ -25,28 +102,42 @@ graph TD
     F --> G["Streamlit Dashboard"]
     F --> H["Mobile App (Future)"]
     F --> I["Cloud Deployment (Render/AWS/Railway)"]
-
 ```
 
 ---
 
-# 🧠 **Features**
+# 🌍 **Live API (Render Deployment)**
+
+The backend is publicly deployed via **Render**.
+
+* **Base URL:** `https://cropai-project.onrender.com/`
+* **Swagger Docs:** `https://cropai-project.onrender.com/docs`
+
+> ⚠️ *Note: Render free tier sleeps when idle. First request may take 20–40 seconds.*
 
 ---
 
-## **1️⃣ Crop Disease Detection (Deep Learning)**
+# 📡 **API Reference (Quick)**
 
-* Built using **MobileNetV2** (Transfer Learning)
-* Trained on the **PlantVillage** dataset
-* Detects crop disease from leaf image
-* Returns:
+## **GET /health**
 
-  * Disease label
-  * Confidence score
+Check server status.
 
-**API Endpoint:** `POST /predict-disease`
+Response:
 
-### **Output Example**
+```json
+{ "status": "ok" }
+```
+
+---
+
+## **POST /predict-disease**
+
+Predict disease from uploaded image.
+
+**Body:** multipart form-data → `file`
+
+**Response example:**
 
 ```json
 {
@@ -58,47 +149,74 @@ graph TD
 
 ---
 
-## **2️⃣ Crop Recommendation System**
+## **POST /recommend-crop**
 
-* Inputs:
-
-  * N, P, K
-  * Temperature, Humidity
-  * pH, Rainfall
-* Predicts the best crop to grow
-
-**API Endpoint:** `POST /recommend-crop`
+**Body:**
 
 ```json
 {
-  "recommended_crop": "rice"
+  "N": 90,
+  "P": 42,
+  "K": 43,
+  "temperature": 22.0,
+  "humidity": 80.0,
+  "ph": 6.5,
+  "rainfall": 200.0
 }
+```
+
+**Response:**
+
+```json
+{ "recommended_crop": "rice" }
 ```
 
 ---
 
-## **3️⃣ Fertilizer Recommendation System**
+## **POST /recommend-fertilizer**
 
-* Inputs:
-
-  * Temperature, Humidity, Moisture
-  * Soil Type, Crop Type
-  * Nitrogen, Phosphorous, Potassium
-* Predicts the best fertilizer
-
-**API Endpoint:** `POST /recommend-fertilizer`
+**Body:**
 
 ```json
 {
-  "recommended_fertilizer": "Urea"
+  "Temparature": 26.0,
+  "Humidity": 52.0,
+  "Moisture": 38.0,
+  "Soil_Type": "Loamy",
+  "Crop_Type": "Sugarcane",
+  "Nitrogen": 50.0,
+  "Potassium": 40.0,
+  "Phosphorous": 40.0
 }
+```
+
+**Response:**
+
+```json
+{ "recommended_fertilizer": "Urea" }
 ```
 
 ---
 
-# 🚀 **How to Run Locally**
+# 🖼️ **Screenshots**
 
-### **1️⃣ Environment Setup**
+All screenshots are stored in the `/screenshots` folder on GitHub.
+
+### **Dashboard Homepage**
+
+![Dashboard Homepage](./screenshots/dashboard_homepage.jpg)
+
+<p align="center">
+  <img src="https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/ChatGPT%20Image%20Dec%208,%202025,%2002_39_04%20AM.png?raw=true" alt="homepage" width="800"/>
+</p>
+
+*(You can add more screenshots the same way.)*
+
+---
+
+# 🧠 **How to Run Locally**
+
+### 1️⃣ Create environment
 
 ```bash
 conda create -n cropai python=3.10
@@ -106,55 +224,40 @@ conda activate cropai
 pip install -r requirements.txt
 ```
 
----
-
-### **2️⃣ Run Backend (FastAPI)**
+### 2️⃣ Start the backend
 
 ```bash
 cd backend
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-API Docs:
-👉 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
----
-
-### **3️⃣ Run Dashboard (Streamlit)**
+### 3️⃣ Run Streamlit dashboard
 
 ```bash
 cd dashboard
 streamlit run app.py
 ```
 
-Dashboard:
-👉 [http://localhost:8501](http://localhost:8501)
-
 ---
 
-# 📸 **Screenshots (Add Later)**
+# 🎯 **Future Improvements**
 
-Create `/screenshots` and upload images.
-Then embed like this:
-
-```markdown
-![Dashboard Home](https://github.com/AKHIL-SAURABH/CropAI-Project/blob/master/screenschots/dashboard_homepage.jpg)
-
-![Disease Prediction](./screenshots/disease_result.png)
-![Crop Recommendation](./screenshots/crop_result.png)
-![Fertilizer Recommendation](./screenshots/fertilizer_result.png)
-```
-
----
-
-# 🎯 **Future Enhancements**
-
+* Better disease classification accuracy
+* More crops & fertilizers
+* Full mobile app (Flutter)
+* Multi-language farmer UI
+* Deployment across scalable cloud infra
 * Improve accuracy with heavy fine-tuning
-* Add multilingual UI for farmers
-* Build a mobile app (Flutter/React Native)
 * Deploy backend + dashboard to Render/Railway/AWS
 * Add real-time weather API integration
 * Build farmer login + recommendation history
+
+---
+
+# 📄 **License**
+
+This project is licensed under the **MIT License**.
+Feel free to use it, modify it, and build upon it with proper attribution.
 
 ---
 
@@ -183,5 +286,4 @@ Perfect for:
 
 **Akhil Saurabh**
 
----
 
