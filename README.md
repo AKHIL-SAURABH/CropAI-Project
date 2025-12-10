@@ -26,6 +26,29 @@ Includes:
 
 ---
 
+## 🏷️ Tech Stack Badges
+
+<div align="center">
+  
+![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Deep%20Learning-orange?logo=tensorflow&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
+![Render](https://img.shields.io/badge/Render-Deployment-46E3B7?logo=render&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Processing-150458?logo=pandas)
+![NumPy](https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?logo=numpy&logoColor=white)
+![EfficientNet](https://img.shields.io/badge/EfficientNet-Transfer%20Learning-brightgreen)
+
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Projects-blueviolet)
+![Deep Learning](https://img.shields.io/badge/Deep%20Learning-Neural%20Networks-red)
+![Computer Vision](https://img.shields.io/badge/Computer%20Vision-XRay%20Analysis-yellow)
+
+![Status](https://img.shields.io/badge/Status-Active-success)
+
+</div>
+
+---
+
 # 🔥 **Features**
 
 ## 🩻 1. Crop Disease Detection (Computer Vision)
